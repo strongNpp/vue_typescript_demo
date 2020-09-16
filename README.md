@@ -1,4 +1,4 @@
-# vue-typescript-test
+# typescript-app
 
 ## Project setup
 ```
