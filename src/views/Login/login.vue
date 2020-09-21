@@ -1,25 +1,29 @@
 <template>
   <div class="login">
     <div class="login_center">
-      <Card>
-        <Form
-          ref="formCustom"
-          :model="form"
-          :rules="ruleCustom"
-          :label-width="80"
-        >
-          <FormItem label="手机号码" prop="phone">
-            <Input type="phone" v-model="form.phone"></Input>
-          </FormItem>
-          <FormItem label="密码" prop="passwd">
-            <Input type="password" v-model="form.passwd"></Input>
-          </FormItem>
-          <FormItem>
-            <Button type="primary" @click="handleSubmit('formCustom')"
-              >登录</Button
-            >
-          </FormItem>
-        </Form>
+       <Card icon="log-in" title="欢迎登录" :bordered="false">
+        <div class="form-con">
+          <Form ref="formCustom" :model="form" :rules="ruleCustom" @keydown.enter.native="handleSubmit('formCustom')">
+            <FormItem prop="phone">
+              <Input v-model="form.phone" placeholder="请输入手机号码">
+                <span slot="prepend">
+                  <Icon :size="16" type="ios-person"></Icon>
+                </span>
+              </Input>
+            </FormItem>
+            <FormItem prop="passwd">
+              <Input type="password" v-model="form.passwd" placeholder="请输入密码">
+                <span slot="prepend">
+                  <Icon :size="14" type="md-lock"></Icon>
+                </span>
+              </Input>
+            </FormItem>
+            <FormItem>
+              <Button @click="handleSubmit('formCustom')" type="primary" long>登录</Button>
+            </FormItem>
+          </Form>
+          <p class="login-tip">输入任意用户名和密码即可</p>
+        </div>
       </Card>
     </div>
   </div>
@@ -38,7 +42,7 @@ export default class login extends Vue {
   }
   form: object = {
     passwd: "",
-    phone: ""
+    phone: "super_admin"
   };
   ruleCustom: object = {
     passwd: [{ required: true, message: "密码不能为空", trigger: "change" }],
@@ -52,11 +56,11 @@ export default class login extends Vue {
     });
   }
   public async login() {
-    let ret = await this.$http.hospLogin({
-      loginType: 0,
-      password: md5(this.form.passwd),
-      phone: String(this.form.phone),
-    });
+    // let ret = await this.$http.hospLogin({
+    //   loginType: 0,
+    //   password: md5(this.form.passwd),
+    //   phone: this.form.phone,
+    // });
     console.log(ret);
   }
 }
@@ -65,12 +69,19 @@ export default class login extends Vue {
 .login {
   background: #f8f8f9;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .login_center {
     width: 320px;
-    margin: 0 auto;
+   
     padding-top: 50px;
     .ivu-btn-primary {
       width: 100%;
+    }
+    .login-tip{
+      font-size: 14px;
+      text-align: center;
     }
   }
 }

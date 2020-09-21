@@ -5,7 +5,7 @@
     </template>
     <Submenu :name="item.name" v-else>
       <template slot="title">
-        <Icon type="ios-navigate"></Icon>
+       <Icon type="ios-cart-outline" />
         {{ item.name }}
       </template>
       <sub-item v-for="(ele, i) in item.child" :key="i" :item="ele" v-show="item.child"></sub-item>

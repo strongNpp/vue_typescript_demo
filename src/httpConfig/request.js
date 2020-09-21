@@ -1,9 +1,6 @@
 import axios from "axios";
-import store from "../store";
 import cookies from "js-cookie";
-import QS from "qs";
 import { Message, Spin } from "view-design";
-import router from "../router";
 const baseUrl = process.env.VUE_APP_URL;
 const service = axios.create({
   // 创建axios实例

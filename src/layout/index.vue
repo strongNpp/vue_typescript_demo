@@ -1,18 +1,31 @@
 <template>
   <div class="layout">
     <Sider
-      :style="{ position: 'fixed', height: '100vh', left: 0, overflow: 'auto' }"
-    >
+      ref="side1"
+      hide-trigger
+      collapsible
+      :collapsed-width="78"
+      v-model="isCollapsed"
+      :style="{ position: 'fixed', height: '100vh', left: 0, overflow: 'auto' }">
       <Menu
-        active-name="option-4111"
+        active-name="1-2"
         theme="dark"
         width="auto"
-        :open-names="['item1', '第二层', '第三层','option-4111']"
+        :class="menuitemClasses"
+        :open-names="['item1', '第二层', '第三层', 'option-4111']"
         accordion
       >
-        <sub-item v-for="(ele, i) in menu" :key="i" :item="ele"></sub-item>
+        <sub-item v-for="(ele, i) in menuList" :key="i" :item="ele"></sub-item>
       </Menu>
     </Sider>
+    <!-- <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}">
+      <side-menu accordion ref="sideMenu" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
+        <div class="logo-con">
+          <img v-show="!collapsed" :src="maxLogo" key="max-logo" />
+          <img v-show="collapsed" :src="minLogo" key="min-logo" />
+        </div>
+      </side-menu>
+    </Sider> -->
     <Layout :style="{ marginLeft: '200px' }">
       <Header :style="{ padding: 0 }" class="layout-header-bar">
         <Icon
@@ -23,8 +36,8 @@
           size="24"
         ></Icon>
         <div class="head_right">
-           <p><router-link to="login">登录</router-link></p>
-           <p><router-link to="">注册</router-link></p>
+          <p><router-link to="login">登录</router-link></p>
+          <p><router-link to="">注册</router-link></p>
         </div>
       </Header>
       <Content :style="{ padding: '0 16px 16px' }">
@@ -42,7 +55,7 @@
 </template>
 
 <script>
-import subItem from "./components/subMenuItem";
+import subItem from './components/subMenuItem'
 export default {
   components: {
     subItem
@@ -50,7 +63,7 @@ export default {
   data() {
     return {
       isCollapsed: false,
-      menu: [
+      menuList: [
         {
           name: "item1",
           child: [
@@ -108,6 +121,7 @@ export default {
       return ["menu-icon", this.isCollapsed ? "rotate-icon" : ""];
     },
     menuitemClasses() {
+      console.log('this.isCollapsed',this.isCollapsed)
       return ["menu-item", this.isCollapsed ? "collapsed-menu" : ""];
     }
   },
@@ -136,9 +150,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .head_right{
+  .head_right {
     display: flex;
-    p{
+    p {
       margin-right: 20px;
       cursor: pointer;
     }

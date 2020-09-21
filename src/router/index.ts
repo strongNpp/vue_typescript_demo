@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
+import iView from 'view-design'
 import Home from "../views/Home.vue";
 import layout from "../layout/index.vue";
 
@@ -51,14 +52,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-/*
-        全局守卫
-        */
+// 全局守卫
 router.beforeEach((to, from, next) => {
   console.log("全局前置守卫",to);
+  iView.LoadingBar.start()
   next();
 });
 router.afterEach((to, from) => {
+  iView.LoadingBar.finish()
+  window.scrollTo(0, 0)
   console.log("全局后置守卫");
 });
 
